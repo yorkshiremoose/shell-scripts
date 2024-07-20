@@ -2,6 +2,8 @@
 
 A collection of useful shell scripts.
 
+To run any shell script, they need to have permissions: `chmod 755 test.sh`
+
 ## Initial problem
 
 To convert a Jekyll website to a Hugo website, I want to take one folder structure and file naming scheme and transform it into another.
