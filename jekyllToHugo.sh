@@ -19,10 +19,14 @@ echo 'Creating directories for each post...'
 cd $outputDir/$year
 
 for FILE in *; do
-  echo $(basename $FILE .md);
-  mkdir $(basename $FILE .md);              # create directory from name without .md extension
-  mv $FILE $(basename $FILE .md)/index.md   # move post to new directory and rename
+  fileName=$(basename $FILE .md); # strip .md extension
+  postName=${fileName:11} # strip 11-character date at front of file name
+  echo $postName;
+  mkdir $postName;
+  mv $FILE $postName/index.md
 done
 
 echo 'COMPLETE'
+
+
 
