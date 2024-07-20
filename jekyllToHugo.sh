@@ -7,23 +7,29 @@ year=2024
 
 echo 'Deleting contents of output folder...'
 
-rm -r $outputDir/*
+rm -r $outputDir
+mkdir $outputDir
 
 echo 'Copying files to output folder...'
 
-mkdir $outputDir/$year
-cp -r $sourceDir/$year/ $outputDir/$year/
+for year in $sourceDir/*; do
 
-echo 'Creating directories for each post...'
+  dirName=$(basename $year)
+  echo "Copying to $outputDir/$dirName/"
 
-cd $outputDir/$year
+  mkdir $outputDir/$dirName
+  cp -r $sourceDir/$dirName/ $outputDir/$dirName/
 
-for FILE in *; do
-  fileName=$(basename $FILE .md); # strip .md extension
-  postName=${fileName:11} # strip 11-character date at front of file name
-  echo $postName;
-  mkdir $postName;
-  mv $FILE $postName/index.md
+  echo "Creating directories for each post in $dirName"
+
+  for FILE in $outputDir/$dirName/*; do
+    fileName=$(basename $FILE .md); # strip .md extension
+    postName=${fileName:11} # strip 11-character date at front of file name
+    # echo $postName;
+    mkdir $outputDir/$dirName/$postName;
+    mv $FILE $outputDir/$dirName/$postName/index.md
+  done
+
 done
 
 echo 'COMPLETE'
