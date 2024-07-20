@@ -3,7 +3,6 @@
 outputDir=output
 sourceDir=~/code/mwa/_posts
 sourceImages=~/code/mwa/assets/images
-year=2024
 
 echo 'Deleting contents of output folder...'
 
