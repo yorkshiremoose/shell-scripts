@@ -10,10 +10,8 @@ echo 'Deleting contents of output folder...'
 rm -r $outputDir
 mkdir $outputDir
 
-echo 'Copying files to output folder...'
-
+echo 'Copying markdown files to output folder...'
 for year in $sourceDir/*; do
-
   dirName=$(basename $year)
   echo "Copying to $outputDir/$dirName/"
 
@@ -25,14 +23,28 @@ for year in $sourceDir/*; do
   for FILE in $outputDir/$dirName/*; do
     fileName=$(basename $FILE .md); # strip .md extension
     postName=${fileName:11} # strip 11-character date at front of file name
-    # echo $postName;
     mkdir $outputDir/$dirName/$postName;
     mv $FILE $outputDir/$dirName/$postName/index.md
   done
-
 done
 
-echo 'COMPLETE'
+echo "MARKDOWN COMPLETE"
+
+echo 'Copying image files to matching markdown folders...'
+for imageYear in $sourceImages/*/; do
+  imageDirName=$(basename $imageYear)
+
+  echo "Copying to $outputDir/$imageDirName/"
+
+  for FILE in $sourceImages/$imageDirName/*; do
+    imageFileName=$(basename $FILE .jpg)
+    # use % to remove image suffix -side for pattern match
+    cp $FILE $outputDir/$imageDirName/${imageFileName%-side}
+  done
+done
+
+echo "IMAGES COMPLETE"
+
 
 
 
